@@ -26,6 +26,7 @@ type MicroProcessor struct {
 }
 
 func (mp *MicroProcessor) executeInstruction() {
+	fmt.Printf("IP: %d, IS: %d, R0: %d, R1: %d\n", mp.registers.IP, mp.registers.IS, mp.registers.R0, mp.registers.R1)
 	switch mp.registers.IS {
 	case 0:
 		fmt.Println("Halting now..")
@@ -53,34 +54,34 @@ func (mp *MicroProcessor) executeInstruction() {
 	case 8:
 		fmt.Println("Print Data..")
 		fmt.Println(mp.memory[mp.registers.IP-1])
-		fmt.Println("Print R0..")
-		fmt.Println(mp.registers.R0)
+		// fmt.Println("Print R0..")
+		// fmt.Println(mp.registers.R0)
 	// Instructions above 8 are 2 byte instructions,
 	// <data> is in the cell before current IP, i.e. mem[mp.registers.IP -1]
 	case 9:
-		fmt.Println("Load Address (val", mp.memory[mp.registers.IP-1], "] to R0")
-		mp.registers.R0 = mp.memory[mp.registers.IP-1]
+		fmt.Println("Load Address (val", mp.memory[mp.registers.IP-1], ") to R0")
+		mp.registers.R0 = mp.memory[mp.memory[mp.registers.IP-1]]
 	case 10:
-		fmt.Println("Load Address (val", mp.memory[mp.registers.IP-1], "] to R1")
-		mp.registers.R1 = mp.memory[mp.registers.IP-1]
+		fmt.Println("Load Address (val", mp.memory[mp.registers.IP-1], ") to R1")
+		mp.registers.R1 = mp.memory[mp.memory[mp.registers.IP-1]]
 	case 11:
 		fmt.Println("Store R0 to Address")
-		mp.memory[mp.registers.IP-1] = mp.registers.R0
+		mp.memory[mp.memory[mp.registers.IP-1]] = mp.registers.R0
 	case 12:
 		fmt.Println("Store R1 to Address ")
-		mp.memory[mp.registers.IP-1] = mp.registers.R1
+		mp.memory[mp.memory[mp.registers.IP-1]] = mp.registers.R1
 	case 13:
 		fmt.Println("Jump To Address..")
-		mp.registers.IP = mp.memory[mp.registers.IP-1]
+		mp.registers.IP = mp.memory[mp.memory[mp.registers.IP-1]]
 	case 14:
 		fmt.Println("Jump To Address if R0..")
 		if mp.registers.R0 == 1 {
-			mp.registers.IP = mp.memory[mp.registers.IP-1]
+			mp.registers.IP = mp.memory[mp.memory[mp.registers.IP-1]]
 		}
 	case 15:
 		fmt.Println("Jump To Address if Not R0..")
 		if mp.registers.R0 != 1 {
-			mp.registers.IP = mp.memory[mp.registers.IP-1]
+			mp.registers.IP = mp.memory[mp.memory[mp.registers.IP-1]]
 		}
 	}
 }
@@ -93,8 +94,8 @@ func (mp *MicroProcessor) dumpMemory() {
 
 func (mp *MicroProcessor) fetchExecuteLoop() {
 	for {
-		fmt.Println("IP:", mp.registers.IP, " // IS:", mp.registers.IS)
 		mp.registers.IS = mp.memory[mp.registers.IP]
+		fmt.Println("\nIP:", mp.registers.IP, " // IS:", mp.registers.IS)
 
 		if mp.registers.IS >= 8 {
 			mp.registers.IP += 2
@@ -118,7 +119,9 @@ func main() {
 	// this program is instruction 9, with data '4', then instruction 10 with data '3',
 	// then instruction 1(add), then 8(print). The rest of the memory locations will
 	// be set to 0 (Halt)
-	proggy := [16]int{9, 4, 10, 3, 1, 8}
+	// proggy := [16]int{9, 4, 10, 3, 1, 8}
+
+	proggy := [16]int{9, 13, 10, 14, 1, 11, 15, 7, 11, 11, 8, 0, 0, 3, 10, 13}
 
 	mp.loadProgram(proggy)
 	mp.fetchExecuteLoop()
