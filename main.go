@@ -54,8 +54,6 @@ func (mp *MicroProcessor) executeInstruction() {
 	case 8:
 		fmt.Println("Print Data..")
 		fmt.Println(mp.memory[mp.registers.IP-1])
-		// fmt.Println("Print R0..")
-		// fmt.Println(mp.registers.R0)
 	// Instructions above 8 are 2 byte instructions,
 	// <data> is in the cell before current IP, i.e. mem[mp.registers.IP -1]
 	case 9:
