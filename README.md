@@ -7,22 +7,39 @@ Instruction Set
 =======================
 
 1-byte Instructions
+
 0 = Halt
+
 1 = Add (R0 = R0 + R1)
+
 2 = Subtract (R0 = R0 – R1)
+
 3 = Increment R0 (R0 = R0 + 1)
+
 4 = Increment R1 (R1 = R1 + 1)
+
 5 = Decrement R0 (R0 = R0 – 1)
+
 6 = Decrement R1 (R1 = R1 – 1)
+
 7 = Ring Bell
+
 2-byte Instructions, value of the second byte is called <data>
+
 8 = Print <data> (The numerical value of <data> is printed)
+
 9 = Load value at address <data> into R0
+
 10 = Load value at address <data> into R1
+
 11 = Store R0 into address <data>
+
 12 = Store R1 into address <data>
+
 13 = Jump to address <data>
+
 14 = Jump to address <data> if R0 == 0
+
 15 = Jump to address <data> if R0 != 0
 
 
