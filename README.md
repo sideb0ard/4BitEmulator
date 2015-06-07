@@ -7,6 +7,7 @@ Instruction Set
 =======================
 
 1-byte Instructions
+-------------------
 
 0 = Halt
 
@@ -25,6 +26,7 @@ Instruction Set
 7 = Ring Bell
 
 2-byte Instructions, value of the second byte is called <data>
+--------------------------------------------------------------
 
 8 = Print <data> (The numerical value of <data> is printed)
 
