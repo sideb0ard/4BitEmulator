@@ -20,10 +20,6 @@ type RegisterBank struct {
 	R1 int // register one
 }
 
-type Program struct {
-	location map[int]int
-	// location = make(map[int]int)
-}
 type MicroProcessor struct {
 	registers RegisterBank
 	memory    [16]int
