@@ -94,7 +94,7 @@ func (mp *MicroProcessor) fetchExecuteLoop() {
 		fmt.Println("IP:", mp.registers.IP, " // IS:", mp.registers.IS)
 		mp.registers.IS = mp.memory[mp.registers.IP]
 
-		if mp.registers.IS > 8 {
+		if mp.registers.IS > 8 { // IS above 8 are 2 byte instructions, so <data> will be in mem[mp.registers.IP -1] after the next increment
 			mp.registers.IP += 2
 		} else {
 			mp.registers.IP += 1
