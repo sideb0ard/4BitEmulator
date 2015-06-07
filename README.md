@@ -1,4 +1,5 @@
 4Bit MicroProcessor emulator based on Richard Buckley lectures:
+https://www.youtube.com/watch?v=gTeDX4yAdyU&list=PL3E12E78D91CA229E
 
 The 4917 Microprocessor
 (Hypothetical processor designed for course). It is 4bit, has 16 memory locations and 4 registers (instruction pointer, instruction store, general register 0 and general register 1). Each memory location could store a number between 0 and 15, and there were 16 instructions.
