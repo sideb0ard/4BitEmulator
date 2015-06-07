@@ -55,6 +55,8 @@ func (mp *MicroProcessor) executeInstruction() {
 		fmt.Println(mp.memory[mp.registers.IP-1])
 		fmt.Println("Print R0..")
 		fmt.Println(mp.registers.R0)
+	// Instructions above 8 are 2 byte instructions,
+	// <data> is in the cell before current IP, i.e. mem[mp.registers.IP -1]
 	case 9:
 		fmt.Println("Load Address (val", mp.memory[mp.registers.IP-1], "] to R0")
 		mp.registers.R0 = mp.memory[mp.registers.IP-1]
@@ -94,7 +96,7 @@ func (mp *MicroProcessor) fetchExecuteLoop() {
 		fmt.Println("IP:", mp.registers.IP, " // IS:", mp.registers.IS)
 		mp.registers.IS = mp.memory[mp.registers.IP]
 
-		if mp.registers.IS > 8 { // IS above 8 are 2 byte instructions, so <data> will be in mem[mp.registers.IP -1] after the next increment
+		if mp.registers.IS > 8 {
 			mp.registers.IP += 2
 		} else {
 			mp.registers.IP += 1
@@ -112,7 +114,12 @@ func (mp *MicroProcessor) loadProgram(program [16]int) {
 
 func main() {
 	mp := new(MicroProcessor)
+
+	// this program is instruction 9, with data '4', then instruction 10 with data '3',
+	// then instruction 1(add), then 8(print). The rest of the memory locations will
+	// be set to 0 (Halt)
 	proggy := [16]int{9, 4, 10, 3, 1, 8}
+
 	mp.loadProgram(proggy)
 	mp.fetchExecuteLoop()
 
