@@ -1,4 +1,4 @@
-4Bit MicroProcessor emulator based on Richard Buckley lectures:
+4Bit MicroProcessor emulator based on Richard Buckland lectures:
 https://www.youtube.com/watch?v=gTeDX4yAdyU&list=PL3E12E78D91CA229E
 
 The 4917 Microprocessor
@@ -26,7 +26,7 @@ Instruction Set
 
 7 = Ring Bell
 
-2-byte Instructions, value of the second byte is called <data>
+2-byte Instructions, value of the second byte is called \<data\>
 --------------------------------------------------------------
 
 8 = Print <data> (The numerical value of <data> is printed)
