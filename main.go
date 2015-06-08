@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -26,7 +27,10 @@ type MicroProcessor struct {
 }
 
 func (mp *MicroProcessor) executeInstruction() {
-	fmt.Printf("IP: %d, IS: %d, R0: %d, R1: %d\n", mp.registers.IP, mp.registers.IS, mp.registers.R0, mp.registers.R1)
+	fmt.Printf("IP: %d, IS: %d, R0: %d, R1: %d\n",
+		mp.registers.IP, mp.registers.IS,
+		mp.registers.R0, mp.registers.R1)
+
 	switch mp.registers.IS {
 	case 0:
 		fmt.Println("Halting now..")
@@ -51,16 +55,20 @@ func (mp *MicroProcessor) executeInstruction() {
 		mp.registers.R1 = mp.registers.R1 - 1
 	case 7:
 		fmt.Println("**Ring Bell**")
+
+	// Instructions 8 and are 2 byte instructions,
+	// <data> is in the cell before current IP, i.e. mem[mp.registers.IP -1]
+
 	case 8:
 		fmt.Println("Print Data..")
 		fmt.Println(mp.memory[mp.registers.IP-1])
-	// Instructions above 8 are 2 byte instructions,
-	// <data> is in the cell before current IP, i.e. mem[mp.registers.IP -1]
 	case 9:
-		fmt.Println("Load Address (val", mp.memory[mp.registers.IP-1], ") to R0")
+		fmt.Println("Load Address (val",
+			mp.memory[mp.memory[mp.registers.IP-1]], ") to R0")
 		mp.registers.R0 = mp.memory[mp.memory[mp.registers.IP-1]]
 	case 10:
-		fmt.Println("Load Address (val", mp.memory[mp.registers.IP-1], ") to R1")
+		fmt.Println("Load Address (val",
+			mp.memory[mp.memory[mp.registers.IP-1]], ") to R1")
 		mp.registers.R1 = mp.memory[mp.memory[mp.registers.IP-1]]
 	case 11:
 		fmt.Println("Store R0 to Address")
@@ -106,6 +114,9 @@ func (mp *MicroProcessor) fetchExecuteLoop() {
 
 func (mp *MicroProcessor) loadProgram(program [16]int) {
 	for k, v := range program {
+		if v < 0 || v > 15 {
+			log.Fatal("bleurgh, buffer overflow!")
+		}
 		fmt.Println(k, v)
 		mp.memory[k] = v
 	}
