@@ -30,6 +30,7 @@ func (mp *MicroProcessor) executeInstruction() {
 	fmt.Printf("IP: %d, IS: %d, R0: %d, R1: %d\n",
 		mp.registers.IP, mp.registers.IS,
 		mp.registers.R0, mp.registers.R1)
+	fmt.Println("Memory: ", mp.memory)
 
 	switch mp.registers.IS {
 	case 0:
@@ -78,16 +79,16 @@ func (mp *MicroProcessor) executeInstruction() {
 		mp.memory[mp.memory[mp.registers.IP-1]] = mp.registers.R1
 	case 13:
 		fmt.Println("Jump To Address..")
-		mp.registers.IP = mp.memory[mp.memory[mp.registers.IP-1]]
+		mp.registers.IP = mp.memory[mp.registers.IP-1]
 	case 14:
 		fmt.Println("Jump To Address if R0..")
-		if mp.registers.R0 == 1 {
-			mp.registers.IP = mp.memory[mp.memory[mp.registers.IP-1]]
+		if mp.registers.R0 == 0 {
+			mp.registers.IP = mp.memory[mp.registers.IP-1]
 		}
 	case 15:
 		fmt.Println("Jump To Address if Not R0..")
-		if mp.registers.R0 != 1 {
-			mp.registers.IP = mp.memory[mp.memory[mp.registers.IP-1]]
+		if mp.registers.R0 != 0 {
+			mp.registers.IP = mp.memory[mp.registers.IP-1]
 		}
 	}
 }
@@ -117,7 +118,7 @@ func (mp *MicroProcessor) loadProgram(program [16]int) {
 		if v < 0 || v > 15 {
 			log.Fatal("bleurgh, buffer overflow!")
 		}
-		fmt.Println(k, v)
+		// fmt.Println(k, v)
 		mp.memory[k] = v
 	}
 }
@@ -130,7 +131,8 @@ func main() {
 	// be set to 0 (Halt)
 	// proggy := [16]int{9, 4, 10, 3, 1, 8}
 
-	proggy := [16]int{9, 13, 10, 14, 1, 11, 15, 7, 11, 11, 8, 0, 0, 3, 10, 13}
+	// proggy := [16]int{9, 13, 10, 14, 1, 11, 15, 7, 11, 11, 8, 0, 0, 3, 10, 13}
+	proggy := [16]int{9, 15, 11, 5, 8, 0, 15, 14, 7, 0, 7, 7, 7, 0, 0, 0}
 
 	mp.loadProgram(proggy)
 	mp.fetchExecuteLoop()
