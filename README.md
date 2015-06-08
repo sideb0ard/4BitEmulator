@@ -29,21 +29,21 @@ Instruction Set
 2-byte Instructions, value of the second byte is called \<data\>
 --------------------------------------------------------------
 
-8 = Print <data> (The numerical value of <data> is printed)
+8 = Print \<data\> (The numerical value of \<data\> is printed)
 
-9 = Load value at address <data> into R0
+9 = Load value at address \<data\> into R0
 
-10 = Load value at address <data> into R1
+10 = Load value at address \<data\> into R1
 
-11 = Store R0 into address <data>
+11 = Store R0 into address \<data\>
 
-12 = Store R1 into address <data>
+12 = Store R1 into address \<data\>
 
-13 = Jump to address <data>
+13 = Jump to address \<data\>
 
-14 = Jump to address <data> if R0 == 0
+14 = Jump to address \<data\> if R0 == 0
 
-15 = Jump to address <data> if R0 != 0
+15 = Jump to address \<data\> if R0 != 0
 
 
 Startup
